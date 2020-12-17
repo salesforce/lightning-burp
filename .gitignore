@@ -13,3 +13,4 @@ buildNumber.properties
 .DS_Store
 dist/
 .idea/
+LightningBurp.iml
