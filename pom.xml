@@ -11,12 +11,12 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
-            <dependency>
-                <groupId>net.portswigger.burp.extender</groupId>
-                <artifactId>burp-extender-api</artifactId>
-                <version>LATEST</version>
-            </dependency>
-		
+		<dependency>
+			<groupId>com.codemagi</groupId>
+			<artifactId>burp-suite-utils</artifactId>
+			<version>LATEST</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

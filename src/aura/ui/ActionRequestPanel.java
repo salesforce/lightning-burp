@@ -14,6 +14,8 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 
+import burp.BurpExtender;
+import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,7 +66,7 @@ public class ActionRequestPanel extends ActionPanel {
         try {
             pretty = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(params);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             pretty = e.getOriginalMessage();
         }
         return pretty;

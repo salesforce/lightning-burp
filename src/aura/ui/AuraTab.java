@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import aura.ActionRequest;
@@ -121,10 +122,10 @@ public class AuraTab implements IMessageEditorTab {
             this.currentAuraMessage = new AuraMessage(jsonText);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
         }
 
         Iterator<String> iter = currentAuraMessage.actionMap.keySet().iterator();
@@ -146,7 +147,7 @@ public class AuraTab implements IMessageEditorTab {
         try {
             response = new AuraResponse(body);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
 
             // Invalid JSON.  happens when we do "key": function()
             // Jackson doesn't support parsing this, so we will just return the string then
@@ -157,7 +158,7 @@ public class AuraTab implements IMessageEditorTab {
             return;
         } catch (IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             return;
         }
         Iterator<String> responseIter = response.responseActionMap.keySet().iterator();
@@ -191,10 +192,10 @@ public class AuraTab implements IMessageEditorTab {
             } catch (JsonProcessingException e) {
                 JOptionPane.showMessageDialog(this.pane, "Invalid JSON entered, using original payload");
                 callbacks.issueAlert("Invalid JSON entered, using original payload");
-                e.printStackTrace();
+                BaseExtender.printStackTrace(e);
             } catch (IOException e) {
                 callbacks.issueAlert("IOException in Aura Actions tab");
-                e.printStackTrace();
+                BaseExtender.printStackTrace(e);
             }
         }
     }
@@ -219,7 +220,7 @@ public class AuraTab implements IMessageEditorTab {
             auraMessageStr = this.currentAuraMessage.getAuraRequest();
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             return this.content;
         }
 

@@ -8,6 +8,7 @@ package aura.ui;
 
 import java.awt.BorderLayout;
 
+import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import aura.ActionResponse;
@@ -28,7 +29,7 @@ public class ActionResponsePanel extends ActionPanel {
 			this.textEditor.setText(response.getResponseString().getBytes());
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BaseExtender.printStackTrace(e);
 			this.textEditor.setText("Invalid JSON".getBytes());
 		}
 		add(this.textEditor.getComponent());

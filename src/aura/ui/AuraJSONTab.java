@@ -9,6 +9,7 @@ package aura.ui;
 import java.awt.Component;
 import java.io.IOException;
 
+import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -120,10 +121,10 @@ public class AuraJSONTab implements IMessageEditorTab {
             String pretty = getPrettifiedJSON(jsonString);
             this.jsonText.setText(pretty.getBytes(StandardCharsets.UTF_8));
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             this.jsonText.setText(jsonString.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             this.jsonText.setText(jsonString.getBytes(StandardCharsets.UTF_8));
         }
 
@@ -143,15 +144,15 @@ public class AuraJSONTab implements IMessageEditorTab {
             auraActionsJson = mapper.readValue(prettyJsonString, JsonNode.class);
         } catch (JsonParseException e) {
             callbacks.issueAlert("Invalid JSON entered, using original payload");
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             return this.content;
         } catch (JsonMappingException e) {
             callbacks.issueAlert("Invalid JSON entered, using original payload");
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             return this.content;
         } catch (IOException e) {
             callbacks.issueAlert("IOException in " + caption + " tab");
-            e.printStackTrace();
+            BaseExtender.printStackTrace(e);
             return this.content;
         }
 

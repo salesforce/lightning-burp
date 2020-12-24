@@ -6,6 +6,7 @@
  */
 package aura;
 
+import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -124,7 +125,7 @@ public class ActionRequest {
 			minifiedParamStr = mapper.writer().writeValueAsString(this.root.get("params"));
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			BaseExtender.printStackTrace(e);
 			return this.root.get("params").asText();
 		}
 		return minifiedParamStr;	
