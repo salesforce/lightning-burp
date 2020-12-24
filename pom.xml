@@ -7,6 +7,7 @@
 
 	<groupId>com.salesforce.salesforce.trust.lightningburp</groupId>
 	<artifactId>LightningBurp</artifactId>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -15,12 +16,7 @@
                 <artifactId>burp-extender-api</artifactId>
                 <version>LATEST</version>
             </dependency>
-
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -33,8 +29,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.8.2</version>
 		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -45,20 +39,6 @@
 	</dependencies>
 
 	<build>
-		<!-- install might not be right -->
-		<defaultGoal>install</defaultGoal>
-		<directory>${basedir}/dist</directory>
-		<finalName>${project.artifactId}-${project.version}</finalName>
-		<filters>
-			<!-- none yet -->
-		</filters>
-
-		<resources>
-			<!-- probably won't have -->
-		</resources>
-
-		<sourceDirectory>${basedir}/src/</sourceDirectory>
-		<outputDirectory>${basedir}/dist</outputDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -88,5 +68,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<version>0.1.1</version>
 </project>
