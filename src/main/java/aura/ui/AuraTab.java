@@ -8,6 +8,7 @@ package aura.ui;
 
 import java.awt.Component;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -50,7 +51,6 @@ public class AuraTab implements IMessageEditorTab {
         this.helpers = callbacks.getHelpers();
         this.httpService = controller.getHttpService();
         this.editable = editable;
-        callbacks.printError("Aura Actions instantiated");
     }
 
     @Override
@@ -68,20 +68,32 @@ public class AuraTab implements IMessageEditorTab {
         return (isRequest && isRequestEnabled(content)) || isResponseEnabled(content);
     }
 
+    /**
+     * Return true if the content is a valid Aura request.
+     * If the request is valid Aura, additionally parse it into an AuraMessage object.
+     *
+     * @param content An HTTP message
+     * @return true if the content is a valid Aura request.
+     */
     private boolean isRequestEnabled(byte[] content) {
-        boolean auraMessage = (null != helpers.getRequestParameter(content, AURA_INDICATOR));
+        boolean isAuraMessage = (null != helpers.getRequestParameter(content, AURA_INDICATOR));
 
         if (this.httpService != null) {
-            boolean auraEndpoint = true; // true until proven wrong
+            boolean isAuraEndpoint = true; // true until proven wrong
             IRequestInfo request = helpers.analyzeRequest(this.httpService, content);
 
             if (request.getUrl() != null) {
-                auraEndpoint = request.getUrl().getPath().contains("/aura");
+                isAuraEndpoint = request.getUrl().getPath().contains("/aura");
             }
-            return auraEndpoint && auraMessage;
+
+            if (isAuraEndpoint && isAuraMessage) {
+                requestSetup(content);
+                return true;
+            };
         } else {
-            return auraMessage;
+            return isAuraMessage;
         }
+        return false;
     }
 
     private boolean isResponseEnabled(byte[] content) {
@@ -109,26 +121,28 @@ public class AuraTab implements IMessageEditorTab {
         this.content = content;
         IParameter param = helpers.getRequestParameter(content, AURA_DATAPARAM);
         String jsonText = Utils.urlDecode(param.getValue());
-        // throw jsonText into extra pannel
+        // throw jsonText into extra panel
 
         try {
             this.currentAuraMessage = new AuraMessage(jsonText);
+
+            //create tabs for each aura action
+            Iterator<String> iter = currentAuraMessage.actionMap.keySet().iterator();
+            while (iter.hasNext()) {
+                String nextId = iter.next();
+                ActionRequest nextActionRequest = currentAuraMessage.actionMap.get(nextId);
+                ActionRequestPanel arPanel = new ActionRequestPanel(nextActionRequest, editable);
+
+                this.actionRequestTabs.put(nextId, arPanel);
+                this.pane.add(nextId + "::" + nextActionRequest.calledMethod, arPanel);
+            }
+
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             BaseExtender.printStackTrace(e);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             BaseExtender.printStackTrace(e);
-        }
-
-        Iterator<String> iter = currentAuraMessage.actionMap.keySet().iterator();
-        while (iter.hasNext()) {
-            String nextId = iter.next();
-            ActionRequest nextActionRequest = currentAuraMessage.actionMap.get(nextId);
-            ActionRequestPanel arPanel = new ActionRequestPanel(nextActionRequest, editable);
-
-            this.actionRequestTabs.put(nextId, arPanel);
-            this.pane.add(nextId + "::" + nextActionRequest.calledMethod, arPanel);
         }
     }
 
