@@ -125,7 +125,7 @@ public class AuraTab implements IMessageEditorTab {
         while (iter.hasNext()) {
             String nextId = iter.next();
             ActionRequest nextActionRequest = currentAuraMessage.actionMap.get(nextId);
-            ActionRequestPanel arPanel = new ActionRequestPanel(this.callbacks, nextActionRequest, editable);
+            ActionRequestPanel arPanel = new ActionRequestPanel(nextActionRequest, editable);
 
             this.actionRequestTabs.put(nextId, arPanel);
             this.pane.add(nextId + "::" + nextActionRequest.calledMethod, arPanel);
@@ -157,7 +157,7 @@ public class AuraTab implements IMessageEditorTab {
         Iterator<String> responseIter = response.responseActionMap.keySet().iterator();
         while (responseIter.hasNext()) {
             String nextActionId = responseIter.next();
-            ActionResponsePanel nextPanel = new ActionResponsePanel(this.callbacks, response.responseActionMap.get(nextActionId));
+            ActionResponsePanel nextPanel = new ActionResponsePanel(response.responseActionMap.get(nextActionId));
             this.pane.add(nextActionId, nextPanel);
         }
     }
