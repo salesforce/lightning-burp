@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class AuraJSONTab implements IMessageEditorTab {
@@ -56,7 +57,6 @@ public class AuraJSONTab implements IMessageEditorTab {
         jsonText.setEditable(editable);
 		this.auraDataparam = auraDataparam;
 		this.caption = caption;
-        callbacks.printError(caption + " instantiated");
     }
 
     @Override
@@ -76,18 +76,18 @@ public class AuraJSONTab implements IMessageEditorTab {
     }
 
     private boolean isRequestEnabled(byte[] content) {
-        boolean auraMessage = (null != helpers.getRequestParameter(content, AURA_INDICATOR));
+        boolean isAuraMessage = (null != helpers.getRequestParameter(content, AURA_INDICATOR));
 
         if (this.httpService != null) {
-            boolean auraEndpoint = true; // true until proven wrong
-            IRequestInfo request = helpers.analyzeRequest(this.httpService, content);
+            boolean isAuraEndpoint = true; // true until proven wrong
+            URL requestUrl = Utils.getRequestUrl(httpService, content);
 
-            if (request.getUrl() != null) {
-                auraEndpoint = request.getUrl().getPath().contains("/aura");
+            if (requestUrl != null) {
+                isAuraEndpoint = requestUrl.getPath().contains("/aura");
             }
-            return auraEndpoint && auraMessage;
+            return isAuraEndpoint && isAuraMessage;
         } else {
-            return auraMessage;
+            return isAuraMessage;
         }
     }
 

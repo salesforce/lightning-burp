@@ -6,7 +6,12 @@
  */
 package aura.ui;
 
+import burp.BurpExtender;
+import burp.IHttpService;
+import burp.IRequestInfo;
+
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
@@ -16,6 +21,11 @@ import java.net.URLEncoder;
  * @author adetlefsen
  */
 public class Utils {
+
+    public static URL getRequestUrl(IHttpService service, byte[] content) {
+        IRequestInfo request = BurpExtender.getHelpers().analyzeRequest(service, content);
+        return request.getUrl();
+    }
 
     public static String urlDecode(String input) {
         try {
