@@ -16,13 +16,13 @@ public class BurpExtender extends BaseExtender {
 	protected void initialize() {
 		extensionName = "Improved Lightning Burp";
 
-		AuraTabFactory auraFactory = new AuraTabFactory(callbacks);
+		AuraTabFactory auraFactory = new AuraTabFactory();
 		callbacks.registerMessageEditorTabFactory(auraFactory);
 
-		AuraJSONTabFactory auraMessageFactory = new AuraJSONTabFactory(callbacks, "message", "Aura Message");
+		AuraJSONTabFactory auraMessageFactory = new AuraJSONTabFactory("message", "Aura Message");
 		callbacks.registerMessageEditorTabFactory(auraMessageFactory);
 
-		AuraJSONTabFactory auraContextFactory = new AuraJSONTabFactory(callbacks, "aura.context", "Aura Context");
+		AuraJSONTabFactory auraContextFactory = new AuraJSONTabFactory("aura.context", "Aura Context");
 		callbacks.registerMessageEditorTabFactory(auraContextFactory);
 	}
 }

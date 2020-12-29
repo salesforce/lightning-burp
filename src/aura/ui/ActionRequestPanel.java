@@ -37,15 +37,15 @@ public class ActionRequestPanel extends ActionPanel {
     private TextField methodField;
     private boolean editable = true;
 
-    public ActionRequestPanel(IBurpExtenderCallbacks callbacks, ActionRequest ar) {
-        this(callbacks, ar, true);
+    public ActionRequestPanel(ActionRequest ar) {
+        this(ar, true);
     }
 
-    public ActionRequestPanel(IBurpExtenderCallbacks callbacks, ActionRequest ar, boolean editable) {
-        super(callbacks);
+    public ActionRequestPanel(ActionRequest ar, boolean editable) {
+        super();
         this.actionRequest = ar;
         JsonNode params = ar.getParams();
-        this.callbacks = callbacks;
+        this.callbacks = BurpExtender.getCallbacks();
         this.editable = editable;
         String pretty = getPrettyPrintedParams(params);
         BorderLayout panelLayout = new BorderLayout();

@@ -6,21 +6,18 @@
  */
 package aura.ui;
 
-import burp.IBurpExtenderCallbacks;
-import burp.IMessageEditorController;
-import burp.IMessageEditorTab;
-import burp.IMessageEditorTabFactory;
+import burp.*;
 
 public class AuraTabFactory implements IMessageEditorTabFactory {
 	private IBurpExtenderCallbacks callbacks;
 	
-	public AuraTabFactory(IBurpExtenderCallbacks callbacks){
-		this.callbacks = callbacks;
+	public AuraTabFactory() {
+		this.callbacks = BurpExtender.getCallbacks();
 	}
 	
 	@Override
 	public IMessageEditorTab createNewInstance(IMessageEditorController controller, boolean editable) {
-		return new AuraTab(controller, editable,this.callbacks);
+		return new AuraTab(controller, editable);
 	}
 
 }
