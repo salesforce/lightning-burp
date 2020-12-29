@@ -9,6 +9,7 @@ package aura.ui;
 import java.awt.Component;
 import java.io.IOException;
 
+import burp.*;
 import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,15 +17,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import burp.IBurpExtenderCallbacks;
-import burp.IExtensionHelpers;
-import burp.IHttpService;
-import burp.IMessageEditorController;
-import burp.IMessageEditorTab;
-import burp.IParameter;
-import burp.IRequestInfo;
-import burp.IResponseInfo;
-import burp.ITextEditor;
+import javax.swing.*;
 import java.nio.charset.StandardCharsets;
 
 public class AuraJSONTab implements IMessageEditorTab {
@@ -43,8 +36,8 @@ public class AuraJSONTab implements IMessageEditorTab {
     public boolean editable;
     public byte[] content;
 
-    public AuraJSONTab(IMessageEditorController controller, boolean editable, IBurpExtenderCallbacks callbacks) {
-        this.callbacks = callbacks;
+    public AuraJSONTab(IMessageEditorController controller, boolean editable) {
+        this.callbacks = BurpExtender.getCallbacks();
         this.helpers = callbacks.getHelpers();
         this.editable = editable;
         this.httpService = controller.getHttpService();
@@ -54,8 +47,8 @@ public class AuraJSONTab implements IMessageEditorTab {
 		this.caption = TAB_CAPTION;
     }
 
-    public AuraJSONTab(IMessageEditorController controller, boolean editable, IBurpExtenderCallbacks callbacks, String auraDataparam, String caption) {
-        this.callbacks = callbacks;
+    public AuraJSONTab(IMessageEditorController controller, boolean editable, String auraDataparam, String caption) {
+        this.callbacks = BurpExtender.getCallbacks();;
         this.helpers = callbacks.getHelpers();
         this.editable = editable;
         this.httpService = controller.getHttpService();
@@ -63,6 +56,7 @@ public class AuraJSONTab implements IMessageEditorTab {
         jsonText.setEditable(editable);
 		this.auraDataparam = auraDataparam;
 		this.caption = caption;
+        callbacks.printError(caption + " instantiated");
     }
 
     @Override

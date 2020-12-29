@@ -8,15 +8,16 @@ package aura.ui;
 
 import javax.swing.JPanel;
 
+import burp.BurpExtender;
 import burp.IBurpExtenderCallbacks;
 import burp.ITextEditor;
 
 @SuppressWarnings("serial")
-public class ActionPanel extends JPanel{
+public class ActionPanel extends JPanel {
 	public ITextEditor textEditor;
 	
-	public ActionPanel(IBurpExtenderCallbacks cb){
-		this.textEditor = cb.createTextEditor();
+	public ActionPanel(){
+		this.textEditor = BurpExtender.getCallbacks().createTextEditor();
 	}
 	
 	public byte[] getSelectedText(){

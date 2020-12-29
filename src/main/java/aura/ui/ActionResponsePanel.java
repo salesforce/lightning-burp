@@ -8,6 +8,7 @@ package aura.ui;
 
 import java.awt.BorderLayout;
 
+import burp.BurpExtender;
 import com.codemagi.burp.BaseExtender;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -18,9 +19,9 @@ import burp.IBurpExtenderCallbacks;
 public class ActionResponsePanel extends ActionPanel {
 	private IBurpExtenderCallbacks callbacks;
 	
-	public ActionResponsePanel(IBurpExtenderCallbacks cb, ActionResponse response){
-		super(cb);
-		this.callbacks = cb;
+	public ActionResponsePanel(ActionResponse response){
+		super();
+		this.callbacks = BurpExtender.getCallbacks();
 		this.setLayout(new BorderLayout());
 		
 		this.textEditor = this.callbacks.createTextEditor();

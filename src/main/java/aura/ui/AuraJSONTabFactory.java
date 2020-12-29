@@ -6,10 +6,7 @@
  */
 package aura.ui;
 
-import burp.IBurpExtenderCallbacks;
-import burp.IMessageEditorController;
-import burp.IMessageEditorTab;
-import burp.IMessageEditorTabFactory;
+import burp.*;
 
 public class AuraJSONTabFactory implements IMessageEditorTabFactory {
 	
@@ -18,19 +15,19 @@ public class AuraJSONTabFactory implements IMessageEditorTabFactory {
 	private String auraDataparam;
 	private String caption;
 	
-	public AuraJSONTabFactory(IBurpExtenderCallbacks callbacks){
-		this.callbacks = callbacks;
+	public AuraJSONTabFactory(){
+		this.callbacks = BurpExtender.getCallbacks();
 	}
 
-	public AuraJSONTabFactory(IBurpExtenderCallbacks callbacks, String auraDataparam, String caption) {
-		this.callbacks = callbacks;
+	public AuraJSONTabFactory(String auraDataparam, String caption) {
+		this.callbacks = BurpExtender.getCallbacks();
 		this.auraDataparam = auraDataparam;
 		this.caption = caption;
 	}
 	
 	@Override
 	public IMessageEditorTab createNewInstance(IMessageEditorController controller, boolean editable) {
-		return new AuraJSONTab(controller, editable, this.callbacks, auraDataparam, caption);
+		return new AuraJSONTab(controller, editable, auraDataparam, caption);
 	}
 
 }
