@@ -66,8 +66,7 @@ public class AuraJSONTab implements IMessageEditorTab {
 
     @Override
     public Component getUiComponent() {
-        return new JButton(caption);
-        //return jsonText.getComponent();
+        return jsonText.getComponent();
     }
 
     @Override
